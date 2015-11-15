@@ -3,6 +3,7 @@ package com.dploy.test.labs.rest;
 import static com.jayway.restassured.RestAssured.expect;
 
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
 
 import com.dploy.test.labs.setup.SetupIntegrationTest;
 
@@ -10,9 +11,9 @@ import com.dploy.test.labs.setup.SetupIntegrationTest;
 public class LabsResourceIntegrationTest extends SetupIntegrationTest {
 
 	@Test
-	public void souldGetIntegrations() throws Exception {
+	public void shouldGet() throws Exception {
 		expect()
-			.statusCode(200)
+			.statusCode(HttpStatus.OK.value())
 				.when().get("/api/labs");
 	}
 	
