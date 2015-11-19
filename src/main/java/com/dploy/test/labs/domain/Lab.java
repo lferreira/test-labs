@@ -1,6 +1,7 @@
 package com.dploy.test.labs.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Lab implements Serializable {
 
@@ -8,8 +9,35 @@ public class Lab implements Serializable {
 	
 	private String id;
 	
+	private String firstName;
+	
+	private String lastName;
+	
+	private Date birth;
+	
+	public Lab() {}
+	
+	public Lab(String id, String firstName, String lastName, Date birth) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.birth = birth;
+	}
+
 	public String getId() {
 		return id;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
 	
+	public Date getBirth() {
+		return birth;
+	}
 }
