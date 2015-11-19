@@ -6,7 +6,12 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
+import br.com.six2six.fixturefactory.Fixture;
+
+import com.dploy.test.labs.domain.Lab;
+import com.dploy.test.labs.fixture.templates.LabTemplate;
 import com.dploy.test.labs.setup.SetupIntegrationTest;
 
 
@@ -27,7 +32,7 @@ public class LabsResourceIntegrationTest extends SetupIntegrationTest {
         when().
         	get("/api/labs/{id}").
         then().
-        	statusCode(200).body("id", equalTo(id));
+        	statusCode(HttpStatus.OK.value()).body("id", equalTo(id));
 	}
 	
 	@Test
@@ -37,6 +42,23 @@ public class LabsResourceIntegrationTest extends SetupIntegrationTest {
 		when().
 			get("/api/labs/{id}").
 		then().
-			statusCode(404);
+			statusCode(HttpStatus.NOT_FOUND.value());
 	}
+	
+	@Test
+	public void shouldAddLab() throws Exception {
+		Lab lab = Fixture.from(Lab.class).gimme(LabTemplate.COMPLETE);
+		given()
+			.contentType(MediaType.APPLICATION_JSON_VALUE)
+			.accept(MediaType.APPLICATION_JSON_VALUE)
+			.body(lab)
+		.when()
+			.post("/api/labs")
+		.then()
+			.statusCode(HttpStatus.CREATED.value())
+		.assertThat()
+			.body("id", equalTo(lab.getId()))
+			.body("firstName", equalTo(lab.getFirstName()))
+			.body("lastName", equalTo(lab.getLastName()));
+	}	
 }
